@@ -1,97 +1,104 @@
-# DSL-3
-#Practical No: 3
-#Aim: Write a python program to compute following computation on matrix:
-#1. Addition of two matrices 
-#2. Subtraction of two matrices 
-#3. Multiplication of two matrices 
-#4. Transpose of a matrix
-#Program:-
-A=[]
-B=[]
+# Practical No: 3
+#  Aim: Write a python program to compute following computation on matrix:
+#  1. Addition of two matrices 
+# 2. Subtraction of two matrices 
+# 3. Multiplication of two matrices 
+# 4. Transpose of a matrix
+# Program:-
+A = []
+B = []
 
-def inp(m):
-   for i in range(row):
-     a=[]
-     for j in range(col):
-       a.append(int(input("Enter element : ")))
-     m.append(a)
+def inp(m, rows, cols):
+    for i in range(rows):
+        a = []
+        for j in range(cols):
+            a.append(int(input(f"Enter element for row {i + 1}, col {j + 1}: ")))
+        m.append(a)
 
+def dis(matrix):
+    for row in matrix:
+        print(row)
 
-def dis(a):
- for i in a:
-   print(i)
+def add(a, b, rows, cols):
+    c = []
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(a[i][j] + b[i][j])
+        c.append(row)
+    print("\nADDITION MATRIX:")
+    dis(c)
 
-print("FOR MATRIX A \n")
-row=int(input("Enter row : "))
-col=int(input("Enter COL  : "))
-inp(A)
+def sub(a, b, rows, cols):
+    c = []
+    for i in range(rows):
+        row = []
+        for j in range(cols):
+            row.append(a[i][j] - b[i][j])
+        c.append(row)
+    print("\nSUBTRACTION MATRIX:")
+    dis(c)
+
+def mul(a, b, row_a, col_a, row_b, col_b):
+    if col_a != row_b:
+        print("\nMatrix multiplication not possible (columns of A != rows of B).")
+        return
+    c = [[0 for _ in range(col_b)] for _ in range(row_a)]
+    for i in range(row_a):
+        for j in range(col_b):
+            for k in range(col_a):
+                c[i][j] += a[i][k] * b[k][j]
+    print("\nMULTIPLICATION MATRIX:")
+    dis(c)
+
+def trans(matrix, rows, cols):
+    t = [[matrix[j][i] for j in range(rows)] for i in range(cols)]
+    print("\nTRANSPOSED MATRIX:")
+    dis(t)
+
+print("FOR MATRIX A:")
+row_a = int(input("Enter rows: "))
+col_a = int(input("Enter cols: "))
+inp(A, row_a, col_a)
 dis(A)
-print("FOR MATRIX B\n")
-row1=int(input("Enter row : "))
-col2=int(input("Enter COL : "))
-inp(B)
+
+print("\nFOR MATRIX B:")
+row_b = int(input("Enter rows: "))
+col_b = int(input("Enter cols: "))
+inp(B, row_b, col_b)
 dis(B)
 
-def add(a,b):
-  c=[]
-  for i in range(row):
-    ad=[]
-    for j in range(col):
-     ad.append(a[i][j]+b[i][j])
-    c.append(ad)
-  print("\nADDITION MATRIX \n")
-  dis(c)
-
-def sub(a,b):
-  c=[]
-  for i in range(row):
-    ad=[]
-    for j in range(col):
-     ad.append(a[i][j]-b[i][j])
-    c.append(ad)
-  print("\nSUBRACTED MATRIX \n")
-  dis(c)
-
-def mul(a,b):
-  C=[[0 for x in range(row)]for y in range(col)]
-  for i in range(row):
-    for j in range(col):
-      for k in range(col):
-        C[i][j]+=a[i][k]*b[k][j]
-  dis(C)
-
-def trans(a):
-   T=[]
-   for i in range(row):
-      t=[]
-      for j in range(col):
-         t.append(a[j][i])
-      T.append(t)
-   dis(T)
-
-
 while True:
-  print("\n-------------\n \n1:additon\n2:substraction\n3:multiplycation\n4:transpose")
-  ch=int(input("Enter your choice : "))
-  if ch==1:
-    add(A,B)
-  elif ch==2:
-    sub(A,B)
-  elif ch==3:
-    if(row==col2 and row1==col):
-      print("\n\n!!!!!!ROW and COLUMN not matched !!!!!!\n\n")
-    mul(A,B)
-  elif ch==4:
-    print("\n!!! WHICH MATRIX WANT TO TRANSPOSE\n1:MATRIX A \n2:MATRIX B")
-    n=int(input("\nENTER = "))
-    if n==1:
-      trans(A)
-    elif n==2:
-      trans(B)
+    print("\n-------------")
+    print("\n1: Addition\n2: Subtraction\n3: Multiplication\n4: Transpose\n5: Exit")
+    ch = int(input("Enter your choice: "))
+
+    if ch == 1:
+        if row_a == row_b and col_a == col_b:
+            add(A, B, row_a, col_a)
+        else:
+            print("Addition not possible (matrices have different dimensions).")
+    elif ch == 2:
+        if row_a == row_b and col_a == col_b:
+            sub(A, B, row_a, col_a)
+        else:
+            print("Subtraction not possible (matrices have different dimensions).")
+    elif ch == 3:
+        mul(A, B, row_a, col_a, row_b, col_b)
+    elif ch == 4:
+        print("\n1: Transpose Matrix A\n2: Transpose Matrix B")
+        n = int(input("Enter your choice: "))
+        if n == 1:
+            trans(A, row_a, col_a)
+        elif n == 2:
+            trans(B, row_b, col_b)
+        else:
+            print("Invalid choice.")
+    elif ch == 5:
+        print("End of Program")
+        break
     else:
-     break
-  else:
-    break
+        print("Invalid choice. Please try again.")
 # output:
 # Enter row : 2
 # Enter COL  : 2
